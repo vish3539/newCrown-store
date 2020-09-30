@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import FormInputComp from '../FormInput/FormInputComp';
-import './SigninStyles.scss'
+import FormInputComp from "../FormInput/FormInputComp";
+import "./SigninStyles.scss";
 import CustomButtonComp from "../CustomButton/CustomButtonComp";
+import { signInWithGoogle } from "../../firebase/firebaseUtil";
 
 class SigninComp extends Component {
   constructor(props) {
@@ -12,7 +13,7 @@ class SigninComp extends Component {
       password: ""
     };
   }
-// form takes care of this
+  // form takes care of this
   handleSubmit = event => {
     event.preventDefault();
     this.setState({
@@ -20,7 +21,7 @@ class SigninComp extends Component {
       password: ""
     });
   };
-// the input field uses this.
+  // the input field uses this.
   handleChange = event => {
     const { value, name } = event.target;
     this.setState({ [name]: value });
@@ -36,7 +37,7 @@ class SigninComp extends Component {
           <FormInputComp
             name="email"
             type="email"
-            label = 'email'
+            label="email"
             value={this.state.email}
             handleChange={this.handleChange}
             required
@@ -44,13 +45,17 @@ class SigninComp extends Component {
           <FormInputComp
             name="password"
             type="password"
-            label= 'password'
+            label="password"
             value={this.state.password}
             handleChange={this.handleChange}
             required
           />
-
-          <CustomButtonComp type="submit">Sign In</CustomButtonComp>
+          <div className="button">
+            <CustomButtonComp type="submit">Sign In</CustomButtonComp>
+            <CustomButtonComp onClick={signInWithGoogle} isGoogleSignIn>
+              Google Sign in
+            </CustomButtonComp>
+          </div>
         </form>
       </div>
     );

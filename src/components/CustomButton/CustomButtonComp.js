@@ -1,9 +1,9 @@
 import React from 'react';
 import './CustomButtonStyle.scss'
 
-function CustomButtonComp({children, ...otherProps}) {
+function CustomButtonComp({children, isGoogleSignIn, ...otherProps}) {
     return (
-        <button className='custom-button' {...otherProps}>
+        <button className={`${isGoogleSignIn ? 'google-sign-in':''} custom-button`} {...otherProps}>
             {children}
         </button>
     )
