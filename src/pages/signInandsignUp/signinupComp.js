@@ -1,7 +1,7 @@
 import React from 'react';
 import './signinupStyles.scss';
 import SigninComp from './../../components/signIn/SigninComp'
-import SignUpComponent from '../../SignUP/SignUpComponent';
+import SignUpComponent from '../../components/SignUP/SignUpComponent';
 
 function SigninupComp() {
     return (
