@@ -6,35 +6,30 @@ import ShopComp from "./pages/shop/ShopComp";
 import HeaderComp from "./components/HeaderComponent/HeaderComp";
 import SigninupComp from "./pages/signInandsignUp/signinupComp";
 import { auth, createUserProfileDocument } from "./firebase/firebaseUtil.js";
+import {connect} from 'react-redux';
+import {setCurrentUser} from './redux/user/user-action'
 
 class App extends React.Component {
-  constructor() {
-    super();
-
-    this.state = {
-      currentUser: null
-    };
-  }
 
   unsubscribeFromAuth = null;
 
   componentDidMount() {
+    const {setCurrentUser}= this.props;
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
       if (userAuth) {
         const userRef = await createUserProfileDocument(userAuth);
 
         userRef.onSnapshot(snapShot => {
-          this.setState(
+          setCurrentUser(
             {
               currentUser: {
                 id: snapShot.id,
                 ...snapShot.data()
               }
             });
-            console.log(this.state)
         });
       } else {
-        this.setState({ currentUser: userAuth });
+        setCurrentUser(userAuth);
       }
     });
   }
@@ -46,7 +41,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <HeaderComp currentUser={this.state.currentUser} />
+        <HeaderComp/>
         <Switch>
           <Route path="/shop" component={ShopComp} />
           <Route path="/signin" component={SigninupComp} />
@@ -57,4 +52,10 @@ class App extends React.Component {
   }
 }
 
-export default App;
+const mapDispatchToprops = dispatch =>({ 
+  // dispatch is a way for redux to know that whatever the object you are passing is
+  // going to be an action object that will be passed to every reducer.
+  setCurrentUser: user => dispatch(setCurrentUser(user))
+})
+
+export default connect(null,mapDispatchToprops)(App);

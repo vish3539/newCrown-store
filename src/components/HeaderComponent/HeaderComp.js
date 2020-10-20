@@ -3,6 +3,9 @@ import {Link} from 'react-router-dom'
 import './HeaderStyle.scss'
 import {ReactComponent as Logo} from '../../assets/crown.svg'
 import {auth} from "../../firebase/firebaseUtil";
+//connect is a higher order component that lets us modify our component to have
+//access things related to redux.
+import {connect} from 'react-redux'
 
 function HeaderComp({currentUser}) {
     return (
@@ -31,4 +34,11 @@ function HeaderComp({currentUser}) {
     )
 }
 
-export default HeaderComp
+const mapStateToProps =state=>({
+    currentUser:state.user.currentUser 
+    // rootReducer(state)-->.user-->userReducer-->.currentUser
+})
+
+export default connect(mapStateToProps)(HeaderComp);
+// the first param is going to be the function that allows us to have access to the state
+// the state being our ROOTreducer
