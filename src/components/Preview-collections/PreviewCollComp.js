@@ -8,8 +8,8 @@ function PreviewCollComp({title, items}) {
             <h1 className='title'>{title.toUpperCase()}</h1>
             <div className='preview'>
                 {
-                    items.filter((item,idx)=>idx<4).map(({id,...itemProps})=>(
-                        <ColItemComp key={id} {...itemProps}></ColItemComp>
+                    items.filter((item,idx)=>idx<4).map((item)=>(
+                        <ColItemComp key={item.id} item ={item}></ColItemComp>
                     ))
                 }
             </div>

@@ -8,6 +8,9 @@ import { auth } from "../../firebase/firebaseUtil";
 import { connect } from "react-redux";
 import CartIconComponent from "../cart-icon/cartIconComponent";
 import CardDropComp from "../cartDropdown/CardDropComp";
+import {createStructuredSelector} from 'reselect';
+import {selecartHidden} from '../../redux/cart/cart-selectors'
+import {selectCurrentUser} from '../../redux/user/user-selector'
 
 function HeaderComp({ currentUser, hidden }) {
   return (
@@ -39,9 +42,9 @@ function HeaderComp({ currentUser, hidden }) {
   );
 }
 // now we need to add one more property, So we can destruct it like this.
-const mapStateToProps = ({ user: { currentUser }, cart: { hidden } }) => ({
-  currentUser,
-  hidden
+const mapStateToProps = createStructuredSelector({
+  currentUser : selectCurrentUser,
+  hidden : selecartHidden
 });
 
 export default connect(mapStateToProps)(HeaderComp);

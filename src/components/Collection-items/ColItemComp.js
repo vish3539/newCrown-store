@@ -1,21 +1,30 @@
 import React from "react";
 import "./ColItemStyle.scss";
+import CustomButtonComp from "../CustomButton/CustomButtonComp";
+import {connect} from 'react-redux';
+import {addItem} from '../../redux/cart/cart-action'
 
-function ColItemComp({ id, name, price, imageUrl }) {
+function ColItemComp({ item, addItem }) {
+  const {name, price, imageUrl} = item;
   return (
     <div className="collection-item">
       <div
         className="image"
         style={{
-          backgroundImage: `url(${imageUrl})`,
+          backgroundImage: `url(${imageUrl})`
         }}
       />
       <div className="collection-footer">
         <span className="name">{name}</span>
         <span className="price">{price}</span>
       </div>
+      <CustomButtonComp onClick={()=>addItem(item)} className='custom-button' inverted>Add to CART</CustomButtonComp>
     </div>
   );
 }
 
-export default ColItemComp;
+const mapDispatchToProps = dispatch =>({
+  addItem: item =>dispatch(addItem(item))
+})
+
+export default connect(null, mapDispatchToProps) (ColItemComp);
